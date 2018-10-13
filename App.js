@@ -12,11 +12,27 @@ if ( Platform.OS === 'android' ){
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
+// const testCharacter = {
+//       name: 'Iron Man',
+//       identity: 'Anthony Edward “Tony” Stark',
+//       bio: '',
+//};
+// const testCharacter = {
+//       name: 'Black Widow',
+//       identity: 'Natasha Romanova',
+//       bio: '',
+// };
+// const testCharacter = {
+//       name: 'Captain America',
+//       identity: 'Steve Rogers',
+//       bio: '',
+// };
 const testCharacter = {
-      name: 'Iron Man',
-      identity: 'Anthony Edward “Tony” Stark',
+      name: 'Falcon',
+      identity: 'Samuel Thomas “Sam” Wilson',
       bio: '',
 };
+
 
 export default class App extends React.Component {
 

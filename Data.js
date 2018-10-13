@@ -38,6 +38,11 @@ export default Data = [
 		name: 'Mr. Fantastic',
 		identity: 'Reed Richards',
 		age: 48,
+	},
+	{
+		name: 'Falcon',
+      	identity: 'Samuel Thomas “Sam” Wilson',
+      	age: 43,
 	}
 ];
 	

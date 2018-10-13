@@ -65,7 +65,7 @@ export default class CharacterPage extends React.Component {
       		<View style={styles.container}>
       			<View style={styles.imageContainer}>
       				<Image
-      					source={ require( '../assets/glamour_CaptainAmerica.jpg')}
+      					source={ require( '../assets/glamour_Falcon.jpg')}
       					style={styles.image}
       				/>
       				{name &&
