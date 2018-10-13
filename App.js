@@ -1,23 +1,53 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { NativeModules, Platform } from 'react-native';
+
+import CharacterPage from './components/CharacterPage';
+import { fetchCharacter } from './utils/MarvelAPI';
+
+import Data from './Data';
+
+
+if ( Platform.OS === 'android' ){
+  const { UIManager } = NativeModules;
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
+
+const testCharacter = {
+      name: 'Iron Man',
+      identity: 'Anthony Edward “Tony” Stark',
+      bio: '',
+};
 
 export default class App extends React.Component {
+
+
+  state = {
+    character: testCharacter,
+  }
+
+ 
+
+  async componentDidMount(){
+
+    const remoteCharacterData = await fetchCharacter( testCharacter.name );
+
+    if ( remoteCharacterData !== null ){
+      const newCharacter = { ...testCharacter, bio: remoteCharacterData.bio };
+      this.setState( { character: newCharacter });
+
+    }
+
+  }
+
+
+
+
   render() {
-    return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
-      </View>
-    );
+
+    const { name, identity, bio } = this.state.character;
+
+    return <CharacterPage name={name} identity={identity} bio={bio}/>;
+    
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
