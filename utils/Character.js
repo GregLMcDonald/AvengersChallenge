@@ -2,10 +2,12 @@
 
 export default class Character {
 
-	constructor( name, identity ){
-		this.name = name;
-		this.identity = identity;
-		this.age = 48;
+	constructor( data ){
+		this.name = data.name;
+		this.identity = data.identity;
+		this.age = data.age;
+		this.bio = data.bio;
+		
 	}
 
 	copy(){

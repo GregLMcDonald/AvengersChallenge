@@ -9,6 +9,7 @@ import {
 	Platform,
 } from 'react-native';
 
+
 import Strings from '../Strings';
 
 
@@ -36,7 +37,7 @@ export default class CharacterPage extends React.Component {
 
 			<Text style={[styles.text, styles.sectionLabel]}>
       			{ this.getSectionLabel( key )} <Text style={styles.detail}>{info}</Text>
-      		</Text>
+      </Text>
 
 		);
 
@@ -45,38 +46,50 @@ export default class CharacterPage extends React.Component {
 
 	render(){
 
-		const { character, language } = this.props;
 
-		if ( character === null ){ return null; }
-
-		const { name, identity, bio, image, powers } = character;
+    const { character, language } = this.props;
+    if ( character ){
+      const { name, image } = character;
+    }
 		
+    if ( character ){
 
-		return (
-      		
-      			<View style={styles.imageContainer}>
-      				<Image source={ image } style={styles.image}/>
-      				<Text style={styles.heroName}>{name.toUpperCase()}</Text>
-      			</View>
+      return (
 
-      			<ScrollView style={styles.infoContainer}>
-      				
-      				{ this.renderSection( 'name' )}
-      				{ this.renderSection( 'identity' )}
-      				{ this.renderSection( 'age' )}
+      <View><Text>HAVE CHARACTER DATA</Text></View> 
+           
+          
+      );
 
-      				<View style={styles.divider}></View>
+    } else {
 
-      				{ this.renderSection( 'bio' )}
-      				{ this.renderSection( 'powers' )}
+      return ( <View><Text>SADLY, NO CHARACTER DATA</Text></View> );
 
-      				<View style={{ height: 30, backgroundColor: 'transparent' }}></View>
+    }
 
-      			</ScrollView>
-      		
-    	);
+		
 	}
 }
+
+ // <View style={styles.imageContainer}>
+ //              <Image source={{ uri: image }} style={styles.image}/>
+ //              <Text style={styles.heroName}>{name.toUpperCase()}</Text>
+ //            </View>
+
+ //            <ScrollView style={styles.infoContainer}>
+              
+ //              { this.renderSection( 'name' )}
+ //              { this.renderSection( 'identity' )}
+ //              { this.renderSection( 'age' )}
+
+ //              <View style={styles.divider}></View>
+
+ //              { this.renderSection( 'bio' )}
+ //              { this.renderSection( 'powers' )}
+
+ //              <View style={{ height: 30, backgroundColor: 'transparent' }}></View>
+
+ //            </ScrollView>
 
 
 const styles = StyleSheet.create({

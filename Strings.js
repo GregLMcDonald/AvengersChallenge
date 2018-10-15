@@ -1,9 +1,8 @@
 /* 	
 	
+	Get localized strings:  Strings[ key ][ language ]
+	English and French are currently supported.	
 	
-
-
-
 */
 
 export default Strings = {

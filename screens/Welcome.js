@@ -12,7 +12,7 @@ import Strings from '../Strings';
 
 
 
-export default function Welcome({ onPress, language }){
+export default function Welcome({ onPress, character }){
 
 	return (
 		 <View style={styles.welcomeScreen}>

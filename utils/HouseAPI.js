@@ -11,12 +11,9 @@ export const fetchCharacter = async ( name ) => {
 
   	if ( response.status === 200 ){
 
-  		const character = new Character( name, result.identity );
+  		const character = result;
   		character.image = 'http://www.gregmcdonald.ca/avengers/' + result.iamge;
-  		character.bio = result.bio || BIO_LORUM_IPSUM;
-  		character.powers = result.powers || POWERS_LORUM_IPSUM;
-  		character.age = result.age;
-
+  		
   		return character;
 
   	} else {
