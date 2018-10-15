@@ -16,13 +16,14 @@ import {
 const BUTTON_SIZE = 70;
 
 
-export default AvengerButton = ( { onPress } ) => {
+export default AvengerButton = ( { onPress, disabled } ) => {
 
 	return (
 		<View style={styles.container}>
 			<TouchableOpacity 
 				onPress={onPress}
 				activeOpacity={0.7}
+				disabled={disabled}
 			>
 				<View style={styles.background}>
 					<Image source={ require( '../assets/avengersIcon.png' ) } style={styles.image} />

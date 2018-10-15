@@ -104,8 +104,7 @@ const styles = StyleSheet.create({
     right: 30,
     alignSelf: 'center',
   },
- 
-});
+ });
 
 
 export default class CharacterPage extends React.Component {
@@ -126,18 +125,11 @@ export default class CharacterPage extends React.Component {
     onAvengerButtonPress: ()=>{},
   }
 
-  // componentWillReceiveProps( newProps ){
+  state = {
+    avengerButtonDisabled: true,
+  }
 
-  //   if (this.props.character !== newProps.character ){
-  //     const animation = LayoutAnimation.create( 
-  //       600,
-  //       LayoutAnimation.Types.easeInEaseOut,
-  //       LayoutAnimation.Properties.opacity,
-  //     );
-  //     LayoutAnimation.configureNext(animation);
-  //   }
-
-  // }
+ 
 
   componentDidUpdate( prevProps ){
 
@@ -148,9 +140,11 @@ export default class CharacterPage extends React.Component {
         LayoutAnimation.Properties.opacity,
       );
       LayoutAnimation.configureNext(animation);
+
+      if ( this.props.character !== null ){
+       setTimeout( ()=>{ this.setState({ avengerButtonDisabled: false })}, 625 );
+      }
     }
-
-
   }
 
 
@@ -190,10 +184,16 @@ export default class CharacterPage extends React.Component {
     }
   }
 
+  handleAvengerButtonPress = () => {
+    const { onAvengerButtonPress } = this.props;
+    this.setState( { avengerButtonDisabled: true }, onAvengerButtonPress );
+  }
+
 
   render() {
 
-    const { character, onAvengerButtonPress } = this.props;
+    const { character } = this.props;
+    const { avengerButtonDisabled } = this.state;
     
 
     return (
@@ -212,7 +212,7 @@ export default class CharacterPage extends React.Component {
           <View style={{ height: 30, backgroundColor: 'transparent' }}/>
         </ScrollView>
         <View style={[ styles.avengerButton, {top: 0.33 * Dimensions.get('window').height - 40 }]}>
-          <AvengerButton onPress={onAvengerButtonPress} />
+          <AvengerButton onPress={this.handleAvengerButtonPress} disabled={avengerButtonDisabled} />
         </View>
       </View>
     );
