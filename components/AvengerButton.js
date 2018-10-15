@@ -26,7 +26,7 @@ export default AvengerButton = ( { onPress } ) => {
 			>
 				<View style={styles.background}>
 					<Image source={ require( '../assets/avengersIcon.png' ) } style={styles.image} />
-				</View>;
+				</View>
 			</TouchableOpacity>
 		</View>
 	);

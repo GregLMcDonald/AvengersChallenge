@@ -12,8 +12,9 @@
   
   LayoutAnimation is used to fade in new character content (image and info)
   and fade out the content when loading a new character. We watch for
-  changes to the character props in componentDidUpdate() and enqueue the 
-  LayoutAnimation there.
+  changes to the character props in componentWillReceiveProps() and enqueue the 
+  LayoutAnimation there.  NB: the React Native docs say that this method is
+  unsafe.
 
 */
 
@@ -125,18 +126,33 @@ export default class CharacterPage extends React.Component {
     onAvengerButtonPress: ()=>{},
   }
 
+  // componentWillReceiveProps( newProps ){
+
+  //   if (this.props.character !== newProps.character ){
+  //     const animation = LayoutAnimation.create( 
+  //       600,
+  //       LayoutAnimation.Types.easeInEaseOut,
+  //       LayoutAnimation.Properties.opacity,
+  //     );
+  //     LayoutAnimation.configureNext(animation);
+  //   }
+
+  // }
 
   componentDidUpdate( prevProps ){
-    if (  this.props.character !== prevProps.character ){
 
+    if (this.props.character !== prevProps.character ){
       const animation = LayoutAnimation.create( 
-        750,
+        600,
         LayoutAnimation.Types.easeInEaseOut,
         LayoutAnimation.Properties.opacity,
       );
       LayoutAnimation.configureNext(animation);
     }
+
+
   }
+
 
   getSectionLabel = (key) => {
     const { language } = this.props;
@@ -182,36 +198,28 @@ export default class CharacterPage extends React.Component {
 
     return (
       <View>
-
         <View style={styles.imageContainer}>
           <Image source={ require( '../assets/avengersPlaceholder.jpg') } style={[styles.image, styles.placeholderImage ]} />
           { character && <Image source={{ uri: character.image }} style={styles.image} /> }          
         </View>
-
-
         <ScrollView style={styles.infoContainer}>
-
           { this.renderSection( 'name' )}
           { this.renderSection( 'identity' )}
           { this.renderSection( 'age' )}
-
-          { character && <View style={styles.divider}></View> }
-
+          { !!(character) && <View style={styles.divider}/>}
           { this.renderSection( 'bio' )}
           { this.renderSection( 'powers' )}
-
-          <View style={{ height: 30, backgroundColor: 'transparent' }}></View>
-
+          <View style={{ height: 30, backgroundColor: 'transparent' }}/>
         </ScrollView>
-
-        {/* MAGIC To position the Avenger button properly, I'm using its radius plus some tweaking. */}
         <View style={[ styles.avengerButton, {top: 0.33 * Dimensions.get('window').height - 40 }]}>
           <AvengerButton onPress={onAvengerButtonPress} />
         </View>
-
       </View>
     );
   }
 }
+
+/* MAGIC above: To position the Avenger button properly, I'm using its radius plus some tweaking. */
+
 
 

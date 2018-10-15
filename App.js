@@ -28,6 +28,15 @@ const TEST_CHARACTERS = [
 ];
 const DEFAULT_LANGUAGE = 'en';
 
+const TEST_CHARACTER_DATA = {
+  name: 'Thor',
+  identity: 'Thor',
+  age: 6000,
+  bio: 'some info',
+  powers: 'some more info',
+  image: 'glamour_Thor.jpg',
+}
+
 export default class App extends React.Component {
   state = {
     character: null,
@@ -64,15 +73,12 @@ export default class App extends React.Component {
     const { character, language } = this.state;
 
     return (
-        
       <View style={styles.container}>
-        
         <CharacterPage
           character={character} 
           language={language} 
           onAvengerButtonPress={this.handleAvengerButtonPress}
         />
-        
       </View>
     );
   }
