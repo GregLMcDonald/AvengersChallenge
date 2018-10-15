@@ -1,3 +1,10 @@
+/*
+	Renders a round off-white button with the Avengers logo
+	in the center.  This is wrapped in TouchableOpacity which handles
+	touch events.
+*/
+
+
 import React from 'react';
 import {
 	TouchableOpacity,
@@ -5,6 +12,8 @@ import {
 	StyleSheet,
 	View,
 } from 'react-native';
+
+const BUTTON_SIZE = 70;
 
 
 export default AvengerButton = ( { onPress } ) => {
@@ -27,17 +36,17 @@ export default AvengerButton = ( { onPress } ) => {
 const styles = StyleSheet.create({
 	background: {
 		backgroundColor: '#fff',
-		width: 70,
-		height: 70,
-		borderRadius: 35,
+		width: BUTTON_SIZE,
+		height: BUTTON_SIZE,
+		borderRadius: 0.5 * BUTTON_SIZE,
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
 	container: {
 		backgroundColor: '#111',
-		width: 70,
-		height: 70,
-		borderRadius: 35,
+		width: BUTTON_SIZE,
+		height: BUTTON_SIZE,
+		borderRadius: 0.5 * BUTTON_SIZE,
 		alignItems: 'center',
 		justifyContent: 'center',
 		elevation: 5,

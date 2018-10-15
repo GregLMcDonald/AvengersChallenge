@@ -1,3 +1,22 @@
+/*
+  
+  With the character information passed in as props, CharacterPage renders 
+  the textual information in a ScrollView.  The image URI is used to fetch
+  the character image from the server and display at the top of the screen
+  scaled to 33% of the screen height. 
+
+  A language props is required and used to label the sections in one of the
+  supported languages (English and French).  All the textual information 
+  about the superheroes in currently only in English, so this flexibility
+  isn't being used.
+  
+  LayoutAnimation is used to fade in new character content (image and info)
+  and fade out the content when loading a new character. We watch for
+  changes to the character props in componentDidUpdate() and enqueue the 
+  LayoutAnimation there.
+
+*/
+
 import React from 'react';
 import {
   Image,
@@ -111,7 +130,7 @@ export default class CharacterPage extends React.Component {
     if (  this.props.character !== prevProps.character ){
 
       const animation = LayoutAnimation.create( 
-        500,
+        750,
         LayoutAnimation.Types.easeInEaseOut,
         LayoutAnimation.Properties.opacity,
       );
@@ -170,10 +189,7 @@ export default class CharacterPage extends React.Component {
         </View>
 
 
-
         <ScrollView style={styles.infoContainer}>
-
-          
 
           { this.renderSection( 'name' )}
           { this.renderSection( 'identity' )}
