@@ -61,6 +61,12 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
   },
+  activityIndicator: {
+  	position: 'absolute',
+  	bottom: 20,
+  	alignSelf: 'center',
+
+  },
   infoContainer: {
     height: '67%',
     width: '100%',
@@ -200,6 +206,7 @@ export default class CharacterPage extends React.Component {
       <View>
         <View style={styles.imageContainer}>
           <Image source={ require( '../assets/avengersPlaceholder.jpg') } style={[styles.image, styles.placeholderImage ]} />
+          { !character && <ActivityIndicator size={'large'} animated={true} style={styles.activityIndicator}/> }
           { character && <Image source={{ uri: character.image }} style={styles.image} /> }          
         </View>
         <ScrollView style={styles.infoContainer}>
