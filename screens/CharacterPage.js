@@ -5,10 +5,15 @@ import {
   StyleSheet,
   Text,
   ScrollView,
+  LayoutAnimation,
+  ActivityIndicator,
+  Dimensions,
 } from 'react-native';
 
 import PropTypes from 'prop-types';
 import Strings from '../Strings';
+import AvengerButton from '../components/AvengerButton';
+
 
 const styles = StyleSheet.create({
 
@@ -17,11 +22,24 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#F9F9F9',
+  },
+  placeholderContainer: {
+    height: '33%',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F9F9F9',
   },
   image: {
     width: '100%',
     height: '100%',
     resizeMode: 'cover',
+  },
+  placeholderImage: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
   },
   infoContainer: {
     height: '67%',
@@ -33,7 +51,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#F9F9F9',
-    fontSize: 14,
+    fontSize: 18,
   },
   sectionLabel: {
     fontWeight: 'bold',
@@ -60,12 +78,20 @@ const styles = StyleSheet.create({
     height: 5,
     marginBottom: 5,
   },
+  avengerButton: {
+    position: 'absolute',
+    top: '33%',
+    right: 30,
+    alignSelf: 'center',
+  },
+ 
 });
 
 
 export default class CharacterPage extends React.Component {
   static propTypes = {
     language: PropTypes.string.isRequired,
+    onAvengerButtonPress: PropTypes.func,
     character: PropTypes.shape({
       name: PropTypes.string.isRequired,
       identity: PropTypes.string.isRequired,
@@ -73,8 +99,25 @@ export default class CharacterPage extends React.Component {
       age: PropTypes.number.isRequired,
       bio: PropTypes.string.isRequired,
       powers: PropTypes.string.isRequired,
-    }).isRequired,
+    }),
   };
+
+  static defaultProps = {
+    onAvengerButtonPress: ()=>{},
+  }
+
+
+  componentDidUpdate( prevProps ){
+    if (  this.props.character !== prevProps.character ){
+
+      const animation = LayoutAnimation.create( 
+        500,
+        LayoutAnimation.Types.easeInEaseOut,
+        LayoutAnimation.Properties.opacity,
+      );
+      LayoutAnimation.configureNext(animation);
+    }
+  }
 
   getSectionLabel = (key) => {
     const { language } = this.props;
@@ -87,54 +130,72 @@ export default class CharacterPage extends React.Component {
     return value || '';
   }
 
+
   renderSection = (key) => {
     const { character } = this.props;
-    const info = character[key];
+    
 
-    return (
+    if ( character && character[key] ){
 
-      <Text style={[styles.text, styles.sectionLabel]}>
-        { this.getSectionLabel(key)}
-        {' '}
-        <Text style={styles.detail}>{info}</Text>
-      </Text>
+      const info = character[key];
 
-    );
-  };
+      return (
+
+        <Text style={[styles.text, styles.sectionLabel]}>
+          { this.getSectionLabel(key)}
+          {' '}
+          <Text style={styles.detail}>{info}</Text>
+        </Text>
+
+      );
+    } else {
+
+      return null;
+
+    }
+  }
 
 
   render() {
-    const { character } = this.props;
-    const { name, image } = character;
 
+    const { character, onAvengerButtonPress } = this.props;
+    
 
-    if (character) {
-      return (
-        <View style={styles.imageContainer}>
-          <Image source={{ uri: image }} style={styles.image} />
-          <Text style={styles.heroName}>{name.toUpperCase()}</Text>
-        </View>
-      );
-    }
     return (
-      <View><Text>SADLY, NO CHARACTER DATA</Text></View>
+      <View>
+
+        <View style={styles.imageContainer}>
+          <Image source={ require( '../assets/avengersPlaceholder.jpg') } style={[styles.image, styles.placeholderImage ]} />
+          { character && <Image source={{ uri: character.image }} style={styles.image} /> }          
+        </View>
+
+
+
+        <ScrollView style={styles.infoContainer}>
+
+          
+
+          { this.renderSection( 'name' )}
+          { this.renderSection( 'identity' )}
+          { this.renderSection( 'age' )}
+
+          { character && <View style={styles.divider}></View> }
+
+          { this.renderSection( 'bio' )}
+          { this.renderSection( 'powers' )}
+
+          <View style={{ height: 30, backgroundColor: 'transparent' }}></View>
+
+        </ScrollView>
+
+        {/* MAGIC To position the Avenger button properly, I'm using its radius plus some tweaking. */}
+        <View style={[ styles.avengerButton, {top: 0.33 * Dimensions.get('window').height - 40 }]}>
+          <AvengerButton onPress={onAvengerButtonPress} />
+        </View>
+
+      </View>
     );
   }
 }
 
-//
 
-//            <ScrollView style={styles.infoContainer}>
-
-//              { this.renderSection( 'name' )}
-//              { this.renderSection( 'identity' )}
-//              { this.renderSection( 'age' )}
-
-//              <View style={styles.divider}></View>
-
-//              { this.renderSection( 'bio' )}
-//              { this.renderSection( 'powers' )}
-
-//              <View style={{ height: 30, backgroundColor: 'transparent' }}></View>
-
-//            </ScrollView>
